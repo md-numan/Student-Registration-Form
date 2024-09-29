@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Students</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container fw-bolder">
+            <a class="navbar-brand" href="#">Student Registration System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Register Student</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="mainData.html">View All Students</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+   
+<div class="container mt-5 fw-bolder">
+    <h1 class="text-center">Update Student Information</h1>
+    <form id="studentUpdateForm">
+        <div class="mb-3">
+            <label for="updateFirstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="updateFirstName" required>
+        </div>
+        <div class="mb-3">
+            <label for="updateLastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="updateLastName" required>
+        </div>
+        <div class="mb-3">
+            <label for="updateRoll" class="form-label">Roll</label>
+            <input type="number" class="form-control" id="updateRoll" required>
+        </div>
+        <div class="mb-3">
+            <label for="updateClass" class="form-label">Class</label>
+            <input type="text" class="form-control" id="updateClass" required>
+        </div>
+        <div class="mb-3">
+            <label for="updateMobileNo" class="form-label">Mobile Number</label>
+            <input type="tel" class="form-control" id="updateMobileNo" required>
+        </div>
+        <div class="mb-3">
+            <label for="updateEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="updateEmail" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+
+<script>
+// Function to get query parameter from URL
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+// Get student index from URL
+
+const studentIndex = getQueryParam('index'); 
+let students = JSON.parse(localStorage.getItem('students')) || [];
+let student = students[studentIndex];
+
+// Populate the update form with the student's current data
+document.getElementById('updateFirstName').value = student.firstName;
+document.getElementById('updateLastName').value = student.lastName;
+document.getElementById('updateRoll').value = student.roll;
+document.getElementById('updateClass').value = student.studentClass;
+document.getElementById('updateMobileNo').value = student.mobileNo;
+document.getElementById('updateEmail').value = student.email;
+
+// Handle form submission and update the student
+document.getElementById('studentUpdateForm').onsubmit = function(e) {
+    e.preventDefault();
+    
+    // Update the student data
+    students[studentIndex] = {
+        firstName: document.getElementById('updateFirstName').value,
+        lastName: document.getElementById('updateLastName').value,
+        roll: document.getElementById('updateRoll').value,
+        studentClass: document.getElementById('updateClass').value,
+        mobileNo: document.getElementById('updateMobileNo').value,
+        email: document.getElementById('updateEmail').value
+    };
+    
+    // Save the updated data to localStorage
+    localStorage.setItem('students', JSON.stringify(students));
+    
+    // Redirect back to the main page
+    window.location.href = 'index.html';
+};
+ 
+    </script>
+
+
+
+</body>
+</html>
